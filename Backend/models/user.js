@@ -12,14 +12,24 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  password: {
-    type: String,
-    required: true,
-  },
+
   isVerified: {
     type: Boolean,
     default: false,
   },
+  password: {
+    type: String,
+    required: function () {
+      // If googleId is not present (email/password login), password is required
+      return !this.googleId;
+    },
+  },
+  authProvider: {
+    type: String,
+    required: true,
+    enum: ["google", "email"], // Ensure it is either google or email
+  },
+
   authProvider: {
     type: String,
     default: "local", // "local" for email/password, "google" for OAuth

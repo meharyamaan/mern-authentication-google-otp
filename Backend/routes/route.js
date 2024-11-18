@@ -1,5 +1,6 @@
 const express = require("express");
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 const { signup, verifyOtp, signin } = require("../controllers/authController");
 const {
   forgotPassword,
@@ -31,7 +32,7 @@ router.get(
     const token = jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.status(200).json({ token, name: req.user.name });
+    res.status(200).json({ token, name: req.user.name, email: req.user.email });
   }
 );
 

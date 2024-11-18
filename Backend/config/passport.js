@@ -22,6 +22,7 @@ passport.use(
             googleId: id,
             authProvider: "google",
             isVerified: true,
+            password: "",
           });
         }
         done(null, user); // Proceed to the next middleware
